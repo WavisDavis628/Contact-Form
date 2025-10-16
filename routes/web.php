@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Livewire\ContactForm;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/contact');
+Route::get('/contact', ContactForm::class)->name('contact');
