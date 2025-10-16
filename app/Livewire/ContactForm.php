@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use App\Models\ContactSubmission;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use App\Mail\ContactSubmitted;
 
 class ContactForm extends Component
 {
@@ -66,6 +68,10 @@ class ContactForm extends Component
             'ip'         => request()->ip(),
             'user_agent' => (string) request()->userAgent(),
         ]);
+
+        // Send notification email to configured inbox
+        Mail::to(env('MAIL_TO', 'david8simonelli@gmail.com'))
+            ->send(new ContactSubmitted($submission));
 
         // Clear fields so they aren't duplicated on refresh
         $this->reset(['name', 'email', 'subject', 'message', 'website']);
