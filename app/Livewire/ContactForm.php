@@ -2,22 +2,25 @@
 
 namespace App\Livewire;
 
-use App\Models\ContactSubmission;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
-use Livewire\Component;
 use App\Mail\ContactSubmitted;
+use App\Models\ContactSubmission;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
+use Livewire\Component;
 
 class ContactForm extends Component
 {
     public string $name = '';
+
     public string $email = '';
+
     public string $subject = '';
+
     public string $message = '';
 
     // Spam controls
     public string $website = '';     // honeypot
+
     public int $started_at = 0;       // time-trap (unix timestamp)
 
     public function mount(): void
@@ -28,8 +31,8 @@ class ContactForm extends Component
     protected function rules(): array
     {
         return [
-            'name'    => ['required', 'string', 'max:120'],
-            'email'   => ['required', 'string', 'email:filter', 'max:190'],
+            'name' => ['required', 'string', 'max:120'],
+            'email' => ['required', 'string', 'email:filter', 'max:190'],
             'subject' => ['required', 'string', 'max:150'],
             'message' => ['required', 'string', 'max:2000'],
         ];
@@ -41,11 +44,13 @@ class ContactForm extends Component
         if ($this->website !== '') {
             // bot filled hidden field
             $this->addError('name', 'Something went wrong. Please try again.');
+
             return;
         }
 
         if (now()->getTimestamp() - $this->started_at < 3) { // 3s time-trap
             $this->addError('name', 'No Spamming, wait a bit longer.');
+
             return;
         }
 
@@ -53,6 +58,7 @@ class ContactForm extends Component
         $key = sprintf('contact:%s:%s', request()->ip(), strtolower($this->email));
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $this->addError('email', 'Too many attempts. Please try again in a minute.');
+
             return;
         }
         RateLimiter::hit($key, 60); // decay in 60 seconds
@@ -61,11 +67,11 @@ class ContactForm extends Component
 
         // Persist to DB with meta
         $submission = ContactSubmission::create([
-            'name'       => $validated['name'],
-            'email'      => $validated['email'],
-            'subject'    => $validated['subject'],
-            'message'    => $validated['message'],
-            'ip'         => request()->ip(),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+            'ip' => request()->ip(),
             'user_agent' => (string) request()->userAgent(),
         ]);
 

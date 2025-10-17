@@ -27,9 +27,9 @@ class ContactSubmissionList extends Component
 
         $submissions = ContactSubmission::query()
             ->when($term !== '', function ($query) use ($term) {
-                $like = '%' . $term . '%';
+                $like = '%'.$term.'%';
                 $query->where('email', 'like', $like)
-                      ->orWhere('subject', 'like', $like);
+                    ->orWhere('subject', 'like', $like);
             })
             ->latest()
             ->paginate($this->perPage);

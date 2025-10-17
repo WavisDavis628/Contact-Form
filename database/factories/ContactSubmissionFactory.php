@@ -12,11 +12,11 @@ class ContactSubmissionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'       => $this->faker->name(),
-            'email'      => $this->faker->unique()->safeEmail(),
-            'subject'    => $this->faker->sentence(mt_rand(3, 7)),
-            'message'    => $this->faker->paragraphs(mt_rand(2, 4), true),
-            'ip'         => $this->faker->ipv4(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'subject' => $this->faker->sentence(mt_rand(3, 7)),
+            'message' => $this->faker->paragraphs(mt_rand(2, 4), true),
+            'ip' => $this->faker->ipv4(),
             'user_agent' => $this->faker->userAgent(),
             'created_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
             'updated_at' => now(),

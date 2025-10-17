@@ -17,7 +17,6 @@
                     focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
 
-            <p class="text-xs text-slate-400 mt-1">Debug: "{{ $q }}"</p>  {{-- TEMP --}}
             <select wire:model="perPage"
                     class="rounded-lg border border-slate-700 bg-slate-900/60 p-2.5 text-slate-100 focus:outline-none">
                 <option value="10">10</option>
