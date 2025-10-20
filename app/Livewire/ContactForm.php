@@ -11,16 +11,11 @@ use Livewire\Component;
 class ContactForm extends Component
 {
     public string $name = '';
-
     public string $email = '';
-
     public string $subject = '';
-
     public string $message = '';
 
-    // Spam controls
     public string $website = '';     // honeypot
-
     public int $started_at = 0;       // time-trap (unix timestamp)
 
     public function mount(): void
@@ -54,7 +49,7 @@ class ContactForm extends Component
             return;
         }
 
-        // (Optional) simple rate limit by IP+email (3/minute)
+        // Simple rate limit by IP+email (3/minute)
         $key = sprintf('contact:%s:%s', request()->ip(), strtolower($this->email));
         if (RateLimiter::tooManyAttempts($key, 3)) {
             $this->addError('email', 'Too many attempts. Please try again in a minute.');

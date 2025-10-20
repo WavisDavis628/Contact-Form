@@ -6,4 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/contact');
 Route::get('/contact', ContactForm::class)->name('contact');
-Route::get('/submissions', ContactSubmissionList::class)->name('submissions');
+Route::get('/submissions', ContactSubmissionList::class)
+    ->middleware('basic.submissions')
+    ->name('submissions');
