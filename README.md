@@ -31,6 +31,35 @@ Open http://127.0.0.1:8000
 - 3-second time-trap before accepting submissions
 - Optional simple rate limiting can be added via Laravel’s `RateLimiter`
 
+## Automated Tests
+
+This project includes a small feature test suite using Laravel’s built-in test tools. The tests cover:
+
+| Test | Purpose |
+|---|---|
+| `tests/Feature/ContactFormTest.php` | Validates required fields and ensures a successful submission writes to the DB and triggers a mail send |
+| `tests/Feature/ExampleTest.php` | Verifies the application boots and responds successfully |
+
+Run all tests locally:
+
+```bash
+php artisan test
+```
+
+## Continuous Integration (GitHub Actions)
+
+This repository includes a CI workflow located at: `.github/workflows/ci.yml`
+
+On each push or pull request, the pipeline:
+
+1. Installs PHP and Composer dependencies
+2. Prepares a fresh SQLite test database
+3. Runs database migrations
+4. Executes the full test suite
+5. Runs **Laravel Pint** in `--test` mode for code-style enforcement
+
+If either tests or Pint fail, the workflow fails; ensuring consistent, high-quality commits.
+
 ## Database
 - Default: SQLite at `database/database.sqlite`
 - Reset with seeds anytime:
