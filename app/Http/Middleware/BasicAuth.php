@@ -13,7 +13,7 @@ class BasicAuth
         $pass = env('ADMIN_PASS');
 
         // If creds aren't set, leave the list open
-        if (!$user || !$pass) {
+        if (! $user || ! $pass) {
             return $next($request);
         }
 

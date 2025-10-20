@@ -11,11 +11,15 @@ use Livewire\Component;
 class ContactForm extends Component
 {
     public string $name = '';
+
     public string $email = '';
+
     public string $subject = '';
+
     public string $message = '';
 
     public string $website = '';     // honeypot
+
     public int $started_at = 0;       // time-trap (unix timestamp)
 
     public function mount(): void

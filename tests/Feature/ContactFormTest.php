@@ -44,11 +44,11 @@ class ContactFormTest extends TestCase
         }
 
         $t->set('name', '')
-          ->set('email', '')      // keep empty to trigger "required"
-          ->set('subject', '')
-          ->set('message', '')
-          ->call('submit')
-          ->assertHasErrors(['name', 'email', 'subject', 'message']);
+            ->set('email', '')      // keep empty to trigger "required"
+            ->set('subject', '')
+            ->set('message', '')
+            ->call('submit')
+            ->assertHasErrors(['name', 'email', 'subject', 'message']);
     }
 
     #[Test]
@@ -70,11 +70,11 @@ class ContactFormTest extends TestCase
         }
 
         $t->set('name', 'Jane Tester')
-          ->set('email', 'jane@example.com')
-          ->set('subject', 'Hello')
-          ->set('message', 'Testing the contact form.')
-          ->call('submit')
-          ->assertHasNoErrors();
+            ->set('email', 'jane@example.com')
+            ->set('subject', 'Hello')
+            ->set('message', 'Testing the contact form.')
+            ->call('submit')
+            ->assertHasNoErrors();
 
         $this->assertTrue(
             ContactSubmission::query()->where('email', 'jane@example.com')->exists()
